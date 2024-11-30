@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smv_app/chapter.dart';
 import 'package:smv_app/chapter_page.dart';
-import 'package:smv_app/shloka.dart';
-import 'package:smv_app/shloka_page.dart';
 
 
 

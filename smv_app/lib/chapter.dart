@@ -9,12 +9,13 @@ import 'package:flutter/services.dart' show rootBundle;
 
 class Chapter {
 
+
   int id;
-  String file_path;
   late Future<List<Shloka>> shlokas;
+  late int verseCount;
 
   // ignore: non_constant_identifier_names
-  Chapter({required this.id, required this.file_path}) {
+  Chapter({required this.id, required file_path}) {
       shlokas = readFile(file_path);
   }
 
@@ -24,12 +25,33 @@ class Chapter {
   }
 
   Future<List<Shloka>> readFile(String path) async {
-      // await loadAsset(path); //returns string 
+    String text = await loadAsset('assets/$path'); //returns string 
+
+  RegExp regExp = RegExp(r'(?<=\.)\s*');
+
+    List<String> split = text.split(regExp);
+    split = split.where((split) => split.trim().isNotEmpty).toList(); //splits based on delim - '.'
+
+    verseCount = split.length;
+
+    List<Shloka> shlokas = []; 
+    
+    for(int i = 0; i < split.length; i++) {
+        shlokas.add(Shloka(id: i+1, content: split[i].substring(0,split[i].length-1))); //drops period
+    }
 
 
-      return <Shloka>[Shloka(id: '$id.1', content: 'shrI rAma')];
+      return shlokas; //returns list of shlokas
 
 
+  }
+
+
+  Future<Shloka> getShloka(int i) async {
+
+    List<Shloka> s = await shlokas; 
+
+    return s[i-1];
   }
 
 
@@ -43,6 +65,10 @@ class Chapter {
   int getId() {
 
     return id;
+  }
+
+  int getVerseCount() {
+    return verseCount;
   }
 
 }

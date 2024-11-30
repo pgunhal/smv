@@ -8,6 +8,7 @@ class ChapterPage extends StatefulWidget{
   List<Chapter> chapters; 
   String title;
 
+  @override
   State<StatefulWidget> createState()  => _ChapterPageState();
 
 }
@@ -39,7 +40,7 @@ class _ChapterPageState extends State<ChapterPage> {
                     FloatingActionButton(  
                       onPressed: _pushChapter,  
                       //TODO change to actually get ALL chapter names
-                      child: Text('Chapter ${widget.chapters[0].getId()}', style: TextStyle(fontSize: 20.0),),  
+                      child: Text('Chapter ${widget.chapters[0].getId()}', style: const TextStyle(fontSize: 20.0),),  
                     ),  
                 ],
             ),

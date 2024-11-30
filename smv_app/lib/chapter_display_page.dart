@@ -4,10 +4,17 @@ import 'package:smv_app/shloka.dart';
 import 'package:smv_app/shloka_page.dart';
 
 class ChapterDisplayPage extends StatefulWidget{
-  ChapterDisplayPage({super.key, required this.chapter});
 
   Chapter chapter;
+  late int verses;
 
+
+  ChapterDisplayPage({super.key, required this.chapter}) {
+      verses = chapter.getVerseCount();
+  }
+
+
+  @override
   State<StatefulWidget> createState()  => _ChapterDisplayPageState();
 
 }
@@ -15,11 +22,13 @@ class ChapterDisplayPage extends StatefulWidget{
 
 class _ChapterDisplayPageState extends State<ChapterDisplayPage> {
 
+  List<FloatingActionButton> verseList = [];
 
-  Future<dynamic> _pushShloka() async {
+
+  Future<dynamic> _pushShloka(int num) async {
     List<Shloka> shlokas = await widget.chapter.getShlokas();
-    Shloka use = shlokas[0];
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ShlokaPage(shloka: use,)));
+    Shloka use = shlokas[num];
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ShlokaPage(shloka: use, ch: widget.chapter)));
   }
 
   @override
@@ -36,14 +45,7 @@ class _ChapterDisplayPageState extends State<ChapterDisplayPage> {
         ),
         body: Center(
             child: ListView(
-                children: <Widget>[
-                    const SizedBox(height: 100),
-                    FloatingActionButton(  
-                      onPressed: _pushShloka,  
-                      //TODO change to actually get ALL chapter names
-                      child: Text('Chapter ${widget.chapter.getShlokas()}', style: TextStyle(fontSize: 20.0),),  
-                    ),  
-                ],
+                children: _listShlokas(),
             ),
         ),
 
@@ -52,6 +54,23 @@ class _ChapterDisplayPageState extends State<ChapterDisplayPage> {
 
 
 
+  }
+
+
+  List<Widget> _listShlokas() {
+    List<Widget> list = [];
+
+    for(int i = 0; i < widget.verses; i++) {
+      list.add(const SizedBox(height: 10));
+      list.add(FloatingActionButton(
+          onPressed: () => _pushShloka(i),
+          child: Text('Verse ${i+1}', style: const TextStyle(fontSize: 20.0))
+      ));
     }
+
+    return list;
+
+
+  }
 
 }
