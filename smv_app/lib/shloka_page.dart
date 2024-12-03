@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:smv_app/chapter.dart';
+import 'package:smv_app/chapter_display_page.dart';
+import 'package:smv_app/chapter_page.dart';
 import 'package:smv_app/shloka.dart';
 
 class ShlokaPage extends StatefulWidget{
 
-  ShlokaPage({super.key, required this.shloka, required this.ch});
+  ShlokaPage({super.key, required this.shloka, required this.ch, required this.chpg});
 
   Shloka shloka;
   Chapter ch;
+  ChapterPage chpg; 
 
   @override
   State<StatefulWidget> createState()  => _ShlokaPageState();
@@ -22,7 +25,7 @@ class _ShlokaPageState extends State<ShlokaPage> {
       int id = widget.shloka.id; //
       if(id > 1) { //previous index exists (bc 0 does not exist as an index here)
         Shloka prev = await widget.ch.getShloka(id-1);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ShlokaPage(shloka: prev, ch: widget.ch)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ShlokaPage(shloka: prev, ch: widget.ch, chpg: widget.chpg)));
       }
   }
 
@@ -30,7 +33,7 @@ class _ShlokaPageState extends State<ShlokaPage> {
     int id = widget.shloka.id; //
     if(id < widget.ch.getVerseCount()) { //next index exists 
         Shloka next = await widget.ch.getShloka(id+1);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ShlokaPage(shloka: next, ch: widget.ch)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ShlokaPage(shloka: next, ch: widget.ch, chpg: widget.chpg)));
     }
     
   }
@@ -46,6 +49,19 @@ class _ShlokaPageState extends State<ShlokaPage> {
             color: Colors.blueGrey
           )
         ),
+        automaticallyImplyLeading: false,
+        actions: [IconButton(
+            icon: const Icon(Icons.close),
+            tooltip: 'Close',
+            alignment: Alignment.centerLeft,
+            onPressed: () {
+              Navigator.push(context, PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => ChapterDisplayPage(chapter: widget.ch, chpg: widget.chpg),
+                transitionDuration: const Duration(seconds: 0), // No transition animation
+              ),);
+            },
+            ) ,
+          ],
       ),
       body: Center(
         child: Padding(

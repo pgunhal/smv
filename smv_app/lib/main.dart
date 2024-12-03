@@ -8,17 +8,16 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'shrI madhva vijaya',
+      themeAnimationDuration: Duration.zero,
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.limeAccent),
         useMaterial3: true,
       ),
-      home: MyHomePage(title: 'SMV App'),
+      home: HomePage(),
     );
   }
 }

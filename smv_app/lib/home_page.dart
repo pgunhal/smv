@@ -4,38 +4,23 @@ import 'package:smv_app/chapter_page.dart';
 
 
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({super.key, required this.title});
+class HomePage extends StatefulWidget {
+  HomePage({super.key});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-  // final Shloka test = Shloka(id: "1.1", content: "kAMtAya kalyANaguNaikadhAmnE");
   final List<Chapter> chapters = [Chapter(file_path: 'ch1.txt', id: 1)];
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
+
       _counter++;
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ChapterPage(chapters: widget.chapters, title: 'shrI madhva vijaya')));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ChapterPage(chapters: widget.chapters, title: 'shrI madhva vijaya',)));
     });
   }
 
@@ -53,29 +38,22 @@ class _MyHomePageState extends State<MyHomePage> {
         // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
         // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
+        // Here we take the value from the HomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: const Text('shrI madhva vijaya', 
+                    style: const TextStyle(
+                          fontWeight: FontWeight.bold, 
+                          color: Colors.blueGrey
+                    )
+                  ),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            const Image(image: AssetImage('assets/images/madhvacharya.jpg')),
             const Text(
               'You have pushed the button this many times:',
             ),

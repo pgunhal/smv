@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smv_app/chapter.dart';
 import 'package:smv_app/chapter_display_page.dart';
+import 'package:smv_app/home_page.dart';
 
 class ChapterPage extends StatefulWidget{
   ChapterPage({super.key, required this.chapters, required this.title});
@@ -18,7 +19,7 @@ class _ChapterPageState extends State<ChapterPage> {
 
 
   _pushChapter() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ChapterDisplayPage(chapter: widget.chapters[0])));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ChapterDisplayPage(chapter: widget.chapters[0], chpg: ChapterPage(chapters: widget.chapters, title: widget.title))));
   }
 
   @override
@@ -32,6 +33,19 @@ class _ChapterPageState extends State<ChapterPage> {
                           color: Colors.blueGrey
                     )
                   ),
+            automaticallyImplyLeading: false,
+            actions: [IconButton(
+              icon: const Icon(Icons.close),
+              tooltip: 'Close',
+              alignment: Alignment.centerLeft,
+              onPressed: () {
+                Navigator.push(context, PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
+                  transitionDuration: const Duration(seconds: 0), // No transition animation
+                ),);
+              },
+              ) ,
+            ],
         ),
         body: Center(
             child: ListView(
