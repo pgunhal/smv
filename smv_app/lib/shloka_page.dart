@@ -25,7 +25,9 @@ class _ShlokaPageState extends State<ShlokaPage> {
       int id = widget.shloka.id; //
       if(id > 1) { //previous index exists (bc 0 does not exist as an index here)
         Shloka prev = await widget.ch.getShloka(id-1);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ShlokaPage(shloka: prev, ch: widget.ch, chpg: widget.chpg)));
+
+        widget.shloka = prev;
+        setState(() {});
       }
   }
 
@@ -33,7 +35,9 @@ class _ShlokaPageState extends State<ShlokaPage> {
     int id = widget.shloka.id; //
     if(id < widget.ch.getVerseCount()) { //next index exists 
         Shloka next = await widget.ch.getShloka(id+1);
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ShlokaPage(shloka: next, ch: widget.ch, chpg: widget.chpg)));
+
+        widget.shloka = next;
+        setState(() {});
     }
     
   }
@@ -83,7 +87,6 @@ class _ShlokaPageState extends State<ShlokaPage> {
       ),
 
 
-//TODO figure out how to format better AND how to fix transitions b/w pages (popups) + DRAWER
       persistentFooterButtons: [
         SizedBox (
           width: MediaQuery.of(context).copyWith().size.width,

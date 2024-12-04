@@ -18,8 +18,8 @@ class ChapterPage extends StatefulWidget{
 class _ChapterPageState extends State<ChapterPage> {
 
 
-  _pushChapter() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ChapterDisplayPage(chapter: widget.chapters[0], chpg: ChapterPage(chapters: widget.chapters, title: widget.title))));
+  _pushChapter(int num) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ChapterDisplayPage(chapter: widget.chapters[num], chpg: ChapterPage(chapters: widget.chapters, title: widget.title))));
   }
 
   @override
@@ -49,22 +49,28 @@ class _ChapterPageState extends State<ChapterPage> {
         ),
         body: Center(
             child: ListView(
-                children: <Widget>[
-                    const SizedBox(height: 100),
-                    FloatingActionButton(  
-                      onPressed: _pushChapter,  
-                      //TODO change to actually get ALL chapter names
-                      child: Text('Chapter ${widget.chapters[0].getId()}', style: const TextStyle(fontSize: 20.0),),  
-                    ),  
-                ],
+                children:_showChapters(),
             ),
         ),
 
     );
 
 
-
-
     }
+
+
+    List<Widget> _showChapters() {
+      List<Widget> chs = [];
+
+      for(int i = 0; i < widget.chapters.length; i++) {
+          chs.add(const SizedBox(height:10));
+          chs.add(FloatingActionButton(  
+                      onPressed: () => _pushChapter(i),  
+                      child: Text('Chapter ${widget.chapters[i].getId()}', style: const TextStyle(fontSize: 20.0),),  
+          ), );
+      }
+      return chs;
+    }
+
 
 }

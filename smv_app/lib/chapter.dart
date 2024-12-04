@@ -54,7 +54,6 @@ class Chapter {
     return s[i-1];
   }
 
-
   Future<List<Shloka>> getShlokas() {
 
     return shlokas;
